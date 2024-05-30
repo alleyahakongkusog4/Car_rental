@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZWA CAR RENTAL</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Roboto:wght@300;400&family=Dancing+Script&display=swap');
+                
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .landing-page {
+            height: 100vh;
+            background: url('https://images.unsplash.com/photo-1549088521-94b6502fec3d?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') repeat center/cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .landing-page h1 {
+            font-size: 100px;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            color: white; 
+        }
+
+        .landing-page .footer {
+            position: absolute;
+            bottom: 20px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .home-button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .nav button {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .transparent {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-gap: 20px;
+            margin-top: 30px;
+        }
+
+        .car-option {
+            padding: 20px;
+            border: 2px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .car-option:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.2);
+            z-index: -1;
+            transition: transform 0.3s ease;
+            transform: translateY(-100%);
+        }
+
+        .car-option:hover:before {
+            transform: translateY(0);
+        }
+
+        .car-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .car-name {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: rgba(0, 0, 0, 0.8);
+            text-align: center;
+        }
+
+        .car-image {
+            width: 100%;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .car-image:hover {
+            transform: scale(1.05);
+        }
+
+        .car-rates {
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.8);
+            text-align: center;
+            display: none;
+        }
+        
+        #priceDisplay {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            width: 30%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        select, input[type="number"], input[type="date"], input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .promo-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .promo-offer {
+            width: 75%;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        #promo.container.transparent {
+            width: 50%; 
+            margin: 0 auto;
+        }
+
+        .promo-offer h2 {
+            margin-top: 0;
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        .promo-offer p {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        #about p, #contact p {
+            font-size: 20px;
+            line-height: 1.6;
+        }
+
+        #about, #contact {
+            position: absolute;
+            bottom: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+        }
+
+        #about h1, #contact h1 {
+            font-size: 32px;
+        }
+
+        #receipt {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 28.4%;
+        } 
+    </style>
+</head>
+<body>
+    <button class="home-button" onclick="navigateTo('home')">Home</button>
+    
+    <div id="landingPage" class="landing-page">
+        <h1>ZWA CAR RENTAL</h1>
+        <div class="nav">
+            <button onclick="navigateTo('rent')">Rent a Car</button>
+            <button onclick="navigateTo('promo')">Promo Offers</button>
+            <button onclick="navigateTo('about')">About</button>
+            <button onclick="navigateTo('contact')">Contact</button>
+        </div>
+        <div class="footer">Your Trusted Car Rental Service.</div>
+    </div>
+
+    <div id="rent" class="container hidden transparent">
+        <h1>Rent a Car</h1>
+        <input type="hidden" id="mitsubishiMirage" value="1500,2000">
+        <input type="hidden" id="toyotaCorolla" value="1500,2000">
+        <input type="hidden" id="toyotaHiace" value="3300,3800">
+        <input type="hidden" id="nissanNavara" value="2800,3300">
+        <input type="hidden" id="toyotaInnova" value="2500,3000">
+
+        <div class="car-grid">
+            <div class="car-option" onclick="selectCar('mitsubishiMirageG4')">
+                <div class="car-name">MITSUBISHI MIRAGE </div>
+                <img src="https://imgcdn.zigwheels.ph/large/gallery/color/24/2886/mitsubishi-mirage-g4-2021-color-796100.jpg" alt="Mitsubishi Mirage G4" class="car-image">
+                <div class="car-rates" id="mitsubishiMirageG4Rates">
+                    <p>With Driver: 1500 PHP/day</p>
+                    <p>Self-Drive: 2000 PHP/day</p>
+                </div>
+            </div>
+            <div class="car-option" onclick="selectCar('toyotaCorolla')">
+                <div class="car-name">TOYOTA COROLLA</div>
+                <img src="https://imgcdn.zigwheels.ph/large/gallery/color/30/2077/toyota-corolla-altis-2019-color-834377.jpg" alt="Toyota Corolla" class="car-image">
+                <div class="car-rates" id="toyotaCorollaRates">
+                    <p>With Driver: 1500 PHP/day</p>
+                    <p>Self-Drive: 2000 PHP/day</p>
+                </div>
+            </div>
+            <div class="car-option" onclick="selectCar('toyotaHiace')">
+                <div class="car-name">TOYOTA HIACE</div>
+                <img src="https://imgcdn.zigwheels.ph/large/gallery/color/30/2070/toyota-hiace-color-513069.jpg" alt="Toyota Hiace" class="car-image">
+                <div class="car-rates" id="toyotaHiaceRates">
+                    <p>With Driver: 3300 PHP/day</p>
+                    <p>Self-Drive: 3800 PHP/day</p>
+                </div>
+            </div>
+            <div class="car-option" onclick="selectCar('nissanNavara')">
+                <div class="car-name">NISSAN NAVARA</div>
+                <img src="https://imgcdn.zigwheels.my/large/gallery/color/30/1725/nissan-navara-2021-color-255423.jpg" alt="Nissan Navara" class="car-image">
+                <div class="car-rates" id="nissanNavaraRates">
+                    <p>With Driver: 2800 PHP/day</p>
+                    <p>Self-Drive: 3300 PHP/day</p>
+                </div>
+            </div>
+            <div class="car-option" onclick="selectCar('toyotaInnova')">
+                <div class="car-name">TOYOTA INNOVA</div>
+                <img src="https://imgcdn.zigwheels.ph/large/gallery/color/30/1108/toyota-innova-color-928206.jpg" alt="Toyota Innova" class="car-image">
+                <div class="car-rates" id="toyotaInnovaRates">
+                    <p>With Driver: 2500 PHP/day</p>
+                    <p>Self-Drive: 3000 PHP/day</p>
+                </div>
+            </div>
+        </div>
+    
+        <form id="rentalForm" class="hidden">
+            <div class="form-group">
+                <label for="carModel">Car Model</label>
+                <select id="carModel" required>
+                    <option value="mitsubishiMirageG4">Mitsubishi Mirage G4</option>
+                    <option value="toyotaCorolla">Toyota Vios</option>
+                    <option value="toyotaHiace">Toyota Hiace</option>
+                    <option value="nissanNavara">Nissan Navara</option>
+                    <option value="toyotaInnova">Toyota Innova</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="rentalDuration">Rental Duration (days)</label>
+                <input type="number" id="rentalDuration" min="1" max="30" required>
+            </div>
+            <div class="form-group">
+                <label for="startDate">Start Date</label>
+                <input type="date" id="startDate" required>
+            </div>
+            <div class="form-group">
+                <label for="driverOption">Driver Option</label>
+                <select id="driverOption" required>
+                    <option value="withDriver">With Driver</option>
+                    <option value="selfDrive">Self-Drive</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="customerContact">Customer Contact (Phone or Email)</label>
+                <input type="text" id="customerContact" required>
+            </div>
+            <button type="button" onclick="calculatePrice()">Calculate Price</button>
+        </form>
+
+        <div id="priceDisplay" class="hidden"></div>
+        <div id="receipt" class="hidden"></div>
+    </div>
+
+    <div id="promo" class="container hidden transparent" style="text-align: center;">
+        <h1>Promo Offers</h1>
+        <div class="promo-grid">
+            <div class="promo-offer">
+                <h2>Weekly Trip</h2>
+                <p>Automatic 10% off in weekly rentals!</p>
+                <p>Terms and conditions apply.</p>
+            </div>
+            <div class="promo-offer">
+                <h2>Birthday Special</h2>
+                <p>Get 10% off when you rent on your birthday!</p>
+                <p>Just present your valid ID.</p>               
+            </div>
+            <div class="promo-offer">
+                <h2>We also offer the following with Driver:</h2>
+                <p>Simala Tour</p>
+                <p>Oslob Whale Shark Tour</p>
+                <p>Moalboal Turtle And Sardine Run/Diving</p>
+                <p>Badian Kawasan Canyoneering</p> 
+                <p>Sumilon Island</p> 
+                <p>Island Hopping</p>
+                <p>City/Mountain Tour</p>
+                <p>Bantayan Island Tour</p>
+                <p>Wedding Cars/Services</p>
+                <p>Pick Up/Drop Off Anywhere</p>
+                <p>Out Of Cebu Tours</p>      
+                <p>Pick Up/Drop Off Anywhere</p>
+                <p>Driving Tutorial</p>
+                <p>Just directly contact us.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="about" class="container hidden transparent" style="text-align: center;">
+        <h1>About ZWA Car Rental</h1>
+        <p>Welcome to ZWA Car Rental! We are your premier car rental service, offering a different kinds of cars that to suits your to your budget and need. Whether you need a car for a day, a week, or longer, we have the perfect solution for you. Our fleet includes economy cars, sedan, SUV, and van, all maintained to the highest standards for your safety and comfort.</p>
+        <p>At ZWA Car Rental, we pride ourselves on our exceptional customer service. Our friendly and knowledgeable team is here to assist you with all your rental needs and ensure a smooth and hassle-free experience. Book with us today and enjoy the convenience of our easy rental process, competitive rates, and reliable vehicles.</p>
+    </div>
+
+    <div id="contact" class="container hidden transparent" style="text-align: center;">
+        <h1>Contact Us</h1>
+        <p>If you have any questions or need assistance, please don't hesitate to get in touch with us.</p>
+        <p>FB: su Per Sly</p>
+        <p>FB Page: ZWA Car Rental</p>
+        <p>Phone: +63 966 175 2694</p>
+        <p>Email: zwacar_rental@gmail.com</p>
+        <p>Address: Bajac, Liloan, Cebu, Philippines</p>
+        <p>         Poblacion, Sogod, Cebu, Philippines</p>
+    </div>
+
+    <script>
+        function navigateTo(section) {
+            var sections = document.querySelectorAll('.container');
+            sections.forEach(function(sec) {
+                sec.classList.add('hidden');
+            });
+
+            if (section === 'home') {
+                document.getElementById('landingPage').style.display = 'flex';
+            } else {
+                document.getElementById('landingPage').style.display = 'none';
+                document.getElementById(section).classList.remove('hidden');
+            }
+        }
+
+        function selectCar(carId) {
+            var carRates = document.querySelectorAll('.car-rates');
+            carRates.forEach(function(rate) {
+                rate.style.display = 'none';
+            });
+            document.getElementById(carId + 'Rates').style.display = 'block';
+
+            var carModel = document.getElementById('carModel');
+            carModel.value = carId;
+
+            document.getElementById('rentalForm').classList.remove('hidden');
+            document.getElementById('priceDisplay').classList.add('hidden');
+            document.getElementById('receipt').classList.add('hidden');
+        }
+
+        function calculatePrice() {
+            var carModel = document.getElementById('carModel').value;
+            var rentalDuration = document.getElementById('rentalDuration').value;
+            var startDate = document.getElementById('startDate').value;
+            var driverOption = document.getElementById('driverOption').value;
+            var customerContact = document.getElementById('customerContact').value;
+
+            var rates = document.getElementById(carModel).value.split(',');
+            var pricePerDay = driverOption === 'withDriver' ? rates[0] : rates[1];
+            var totalPrice = pricePerDay * rentalDuration;
+
+            document.getElementById('priceDisplay').innerHTML = 'Total Price: ' + totalPrice + ' PHP';
+            document.getElementById('priceDisplay').classList.remove('hidden');
+
+            var receiptHtml = `
+                <h2>Receipt</h2>
+                <p><strong>Car Model:</strong> ${carModel}</p>
+                <p><strong>Rental Duration:</strong> ${rentalDuration} days</p>
+                <p><strong>Start Date:</strong> ${startDate}</p>
+                <p><strong>Driver Option:</strong> ${driverOption === 'withDriver' ? 'With Driver' : 'Self-Drive'}</p>
+                <p><strong>Total Price:</strong> ${totalPrice} PHP</p>
+                <p><strong>Customer Contact:</strong> ${customerContact}</p>
+            `;
+            document.getElementById('receipt').innerHTML = receiptHtml;
+            document.getElementById('receipt').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
